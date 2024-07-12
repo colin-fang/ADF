@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADF Token Interaction</title>
+    <!-- Load web3.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.5.2/web3.min.js"></script>
+    <script type="text/javascript">
+        // Wait for the page to load
+        window.addEventListener('load', async () => {
+            // Modern dapp browsers...
+            try{
+                window.web3 = new Web3('http://localhost:7545');
+                console.log("local ganache connection succeeded");
+            }catch{
+                console.log("local ganache connection failed");
+            }
+            /*if (window.ethereum) {
+                window.web3 = new Web3(ethereum);
+                try {
+                    // Request account access if needed
+                    await ethereum.enable();
+                    // Acccounts now exposed
+                } catch (error) {
+                    // User denied account access...
+                    console.error("User denied account access");
+                }
+            }
+            // Legacy dapp browsers...
+            else if (window.web3) {
+                window.web3 = new Web3(web3.currentProvider);
+                // Acccounts always exposed
+            }
+            // Non-dapp browsers...
+            else {
+                try{
+                    window.web3 = new Web3('http://localhost:7545');
+                }catch{
+
+                }
+                console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+            }*/
+
+            // Contract ABI definition
+            const contractABI = [{"constant":false,"inputs":[],"name":"disregardProposeOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"reclaimADF","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"uint256"}],"name":"getFeeFor","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"r","type":"bytes32[]"},{"name":"s","type":"bytes32[]"},{"name":"v","type":"uint8[]"},{"name":"to","type":"address[]"},{"name":"value","type":"uint256[]"},{"name":"serviceFee","type":"uint256[]"},{"name":"seq","type":"uint256[]"},{"name":"deadline","type":"uint256[]"}],"name":"betaDelegatedTransferBatch","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"sig","type":"bytes"},{"name":"to","type":"address"},{"name":"value","type":"uint256"},{"name":"serviceFee","type":"uint256"},{"name":"seq","type":"uint256"},{"name":"deadline","type":"uint256"}],"name":"betaDelegatedTransfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"initializeDomainSeparator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"assetProtectionRole","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newFeeController","type":"address"}],"name":"setFeeController","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_newFeeRate","type":"uint256"}],"name":"setFeeRate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"unfreeze","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"feeRecipient","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claimOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_newSupplyController","type":"address"}],"name":"setSupplyController","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"feeParts","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"feeController","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"initialize","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"target","type":"address"}],"name":"nextSeqOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"freeze","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"feeRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newWhitelister","type":"address"}],"name":"setBetaDelegateWhitelister","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"decreaseSupply","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"isWhitelistedBetaDelegate","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_newAssetProtectionRole","type":"address"}],"name":"setAssetProtectionRole","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"whitelistBetaDelegate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_proposedOwner","type":"address"}],"name":"proposeOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"increaseSupply","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"betaDelegateWhitelister","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"feeDecimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"proposedOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"unwhitelistBetaDelegate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"wipeFrozenAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"EIP712_DOMAIN_HASH","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"isFrozen","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newFeeRecipient","type":"address"}],"name":"setFeeRecipient","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"supplyController","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"currentOwner","type":"address"},{"indexed":true,"name":"proposedOwner","type":"address"}],"name":"OwnershipTransferProposed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldProposedOwner","type":"address"}],"name":"OwnershipTransferDisregarded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[],"name":"Pause","type":"event"},{"anonymous":false,"inputs":[],"name":"Unpause","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"addr","type":"address"}],"name":"AddressFrozen","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"addr","type":"address"}],"name":"AddressUnfrozen","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"addr","type":"address"}],"name":"FrozenAddressWiped","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldAssetProtectionRole","type":"address"},{"indexed":true,"name":"newAssetProtectionRole","type":"address"}],"name":"AssetProtectionRoleSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"SupplyIncreased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"SupplyDecreased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldSupplyController","type":"address"},{"indexed":true,"name":"newSupplyController","type":"address"}],"name":"SupplyControllerSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"seq","type":"uint256"},{"indexed":false,"name":"serviceFee","type":"uint256"}],"name":"BetaDelegatedTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldWhitelister","type":"address"},{"indexed":true,"name":"newWhitelister","type":"address"}],"name":"BetaDelegateWhitelisterSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"newDelegate","type":"address"}],"name":"BetaDelegateWhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldDelegate","type":"address"}],"name":"BetaDelegateUnwhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"FeeCollected","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldFeeRate","type":"uint256"},{"indexed":true,"name":"newFeeRate","type":"uint256"}],"name":"FeeRateSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldFeeController","type":"address"},{"indexed":true,"name":"newFeeController","type":"address"}],"name":"FeeControllerSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldFeeRecipient","type":"address"},{"indexed":true,"name":"newFeeRecipient","type":"address"}],"name":"FeeRecipientSet","type":"event"}];
+
+            // Contract address 
+			//Address of local tightfisted rythm contract
+            //const contractAddress = '0x5d093d7ffc7901D3AC1Fbca7f590C2fCc1254716'; 
+
+			//Address of local tan potato ganache contract
+           //const contractAddress = '0x65A160271E0a18061102eDe60CcA69B1fc05A80d'; 
+			//Address of local tan potato ganache contract proxy
+			const contractAddress = '0x9368AB8253AFAbFB0214845867D4E5F0960BC59C'; 
+
+			//Address of Sepolia testnet contract implementation
+			//const contractAddress = '0x4e7ebd75E72C862Fc3DA3E2b9100aA5C620c309d';
+			//Address of Sepolia testnet contract proxy
+			//const contractAddress = '0xa25f0e9D205Ea819d0A6eF075Ce5D5bE084cb664';
+
+
+
+            // Initialize contract instance
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+            var currentAccount = '0';
+
+            // Function to populate accounts dropdown and switch between them
+        async function populateAccountsDropdown() {
+
+            // Get accounts from Ganache
+            const accounts = await web3.eth.getAccounts();
+
+            // Select dropdown element
+            const accountSelect = document.getElementById('accountSelect');
+            const currentAccountSpan = document.getElementById('currentAccount');
+
+            // Populate dropdown with accounts
+            accounts.forEach((account, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.text = account;
+                accountSelect.appendChild(option);
+            });
+
+            // Initial selection
+            if (accounts.length > 0) {
+                currentAccountSpan.textContent = accounts[0];
+                currentAccount = accounts[0];
+            }
+
+            // Function to switch accounts
+            window.switchAccount = async function() {
+                const selectedIndex = accountSelect.value;
+                if (selectedIndex >= 0 && selectedIndex < accounts.length) {
+                    const selectedAccount = accounts[selectedIndex];
+                    currentAccountSpan.textContent = selectedAccount;
+                    currentAccount = selectedAccount;
+
+                    // Perform any action that requires the selected account
+                    console.log(`Switched to account: ${selectedAccount}`);
+                }
+            };
+        }
+
+        // Call function to populate dropdown and initialize web3
+        populateAccountsDropdown();
+
+
+        // Example function to get total supply
+        async function getTotalSupply() {
+            try {
+                const result = await contract.methods.totalSupply().call();
+                alert(`Total Supply of ADF: ${result}`);
+            } catch (error) {
+                console.error(error);
+                alert('Failed to fetch total supply.');
+            }
+        }
+
+        // Example function to get balance of an address
+        async function getBalance(address) {
+            try {
+                const result = await contract.methods.balanceOf(address).call();
+                alert(`Balance of ${address}: ${result}`);
+            } catch (error) {
+                console.error(error);
+                alert(`Failed to fetch balance of ${address}.`);
+            }
+        }
+            // Function to increase supply
+        async function increaseSupply(amount) {
+            try {
+                const accounts = await web3.eth.getAccounts();
+                const result = await contract.methods.increaseSupply(amount).send({ from: currentAccount });
+                console.log(result);
+                alert(`Successfully increased supply by ${amount}`);
+            } catch (error) {
+                console.error(error);
+                alert('Failed to increase supply.');
+            }
+        }
+        // Function to decrease supply
+        async function decreaseSupply(amount) {
+            try {
+                const accounts = await web3.eth.getAccounts();
+                const result = await contract.methods.decreaseSupply(amount).send({ from: currentAccount });
+                console.log(result);
+                alert(`Successfully decreased supply by ${amount}`);
+            } catch (error) {
+                console.error(error);
+                alert('Failed to decrease supply.');
+            }
+        }
+        // Function to transferFrom tokens
+        async function transferFromTokens(from, to, amount) {
+            try {
+                const accounts = await web3.eth.getAccounts();
+                const result = await contract.methods.transferFrom(from, to, amount).send({ from: currentAccount });
+                console.log(result);
+                alert(`Successfully transferred ${amount} ADF tokens to ${to}`);
+            } catch (error) {
+                console.error(error);
+                alert('Failed to transfer tokens.');
+            }
+        }
+        // Function to transfer tokens
+        async function transferTokens(to, amount) {
+            try {
+                const accounts = await web3.eth.getAccounts();
+                const result = await contract.methods.transfer(to, amount).send({ from: currentAccount });
+                console.log(result);
+                alert(`Successfully transferred ${amount} ADF tokens to ${to}`);
+            } catch (error) {
+                console.error(error);
+                alert('Failed to transfer tokens.');
+            }
+        }
+            // Function to pause the contract
+        async function pauseContract() {
+            const accounts = await web3.eth.getAccounts();
+            try {
+                await contract.methods.pause().send({ from: currentAccount });
+                alert('Contract paused successfully.');
+            } catch (error) {
+                console.error(error);
+                alert('Failed to pause the contract.');
+            }
+        }
+
+        // Function to unpause the contract
+        async function unpauseContract() {
+            const accounts = await web3.eth.getAccounts();
+            try {
+                await contract.methods.unpause().send({ from: currentAccount });
+                alert('Contract unpaused successfully.');
+            } catch (error) {
+                console.error(error);
+                alert('Failed to unpause the contract.');
+            }
+        }
+        // Pause and unpause buttons event listeners
+        document.getElementById('pauseBtn').addEventListener('click', pauseContract);
+        document.getElementById('unpauseBtn').addEventListener('click', unpauseContract);
+
+        // Function to interact with approve
+            async function approve(spender, value) {
+                try {
+                    const accounts = await web3.eth.getAccounts();
+                    const result = await contract.methods.approve(spender, value).send({ from: currentAccount });
+                    console.log('Approval successful:', result);
+                    alert('Approval successful');
+                } catch (error) {
+                    console.error('Failed to approve:', error);
+                    alert('Failed to approve');
+                }
+            }
+
+        // Function to interact with allowance
+        async function getAllowance(owner, spender) {
+            try {
+                const result = await contract.methods.allowance(owner, spender).call();
+                console.log(`Allowance of ${spender} by ${owner}: ${result}`);
+                alert(`Allowance of ${spender} by ${owner}: ${result}`);
+            } catch (error) {
+                console.error('Failed to fetch allowance:', error);
+                alert('Failed to fetch allowance');
+            }
+        }
+
+        // Function to call getFeeFor
+            async function getFeeFor(value) {
+                try {
+                    const fee = await contract.methods.getFeeFor(value).call();
+                    alert(`The fee for ${value} is: ${fee}`);
+                } catch (error) {
+                    console.error("Failed to fetch the fee", error);
+                    alert("Failed to fetch the fee. See console for details.");
+                }
+            }
+
+            // Function to set Fee Recipient
+            async function setFeeRecipient(newRecipient) {
+                try {
+                    const accounts = await web3.eth.getAccounts();
+                    await contract.methods.setFeeRecipient(newRecipient).send({ from: currentAccount });
+                    alert(`Fee recipient set to: ${newRecipient}`);
+                } catch (error) {
+                    console.error("Failed to set fee recipient", error);
+                    alert("Failed to set fee recipient. See console for details.");
+                }
+            }
+
+            // Function to set Fee Rate
+            async function setFeeRate(newRate) {
+                try {
+                    const accounts = await web3.eth.getAccounts();
+                    await contract.methods.setFeeRate(newRate).send({ from: currentAccount });
+                    alert(`Fee rate set to: ${newRate}`);
+                } catch (error) {
+                    console.error("Failed to set fee rate", error);
+                    alert("Failed to set fee rate. See console for details.");
+                }
+            }
+
+            // Function to set Fee Controller
+            async function setFeeController(newController) {
+                try {
+                    const accounts = await web3.eth.getAccounts();
+                    await contract.methods.setFeeController(newController).send({ from: currentAccount });
+                    alert(`Fee controller set to: ${newController}`);
+                } catch (error) {
+                    console.error("Failed to set fee controller", error);
+                    alert("Failed to set fee controller. See console for details.");
+                }
+            }
+
+			 // Function to Set Asset Protection Role
+            async function setAssetProtectionRole(newRole) {
+                const accounts = await web3.eth.getAccounts();
+                await contract.methods.setAssetProtectionRole(newRole).send({ from: currentAccount });
+                alert(`Asset protection role set to: ${newRole}`);
+            }
+
+            // Function to Freeze address
+            async function freezeAddress(address) {
+                const accounts = await web3.eth.getAccounts();
+                await contract.methods.freeze(address).send({ from: currentAccount });
+                alert(`Address frozen: ${address}`);
+            }
+
+            // Function to Unfreeze address
+            async function unfreezeAddress(address) {
+                const accounts = await web3.eth.getAccounts();
+                await contract.methods.unfreeze(address).send({ from: currentAccount });
+                alert(`Address unfrozen: ${address}`);
+            }
+
+            //Function to Wipe Frozen Address
+            async function wipeFrozenAddress(address) {
+                const accounts = await web3.eth.getAccounts();
+                await contract.methods.wipeFrozenAddress(address).send({ from: currentAccount });
+                alert(`Frozen address wiped: ${address}`);
+            }
+
+            // Check if address is frozen
+            async function checkIfFrozen(address) {
+                const isFrozen = await contract.methods.isFrozen(address).call();
+                alert(`Is the address ${address} frozen? ${isFrozen}`);
+            }
+
+            // get Total supply and get balance buttons
+            document.getElementById('getTotalSupplyBtn').addEventListener('click', getTotalSupply);
+            document.getElementById('getBalanceBtn').addEventListener('click', () => {
+                const address = document.getElementById('addressInput').value.trim();
+                if (address) {
+                    getBalance(address);
+                } else {
+                    alert('Please enter an address.');
+                }
+            });
+            
+            // Increase Supply button handler
+            document.getElementById('increaseSupplyBtn').addEventListener('click', () => {
+                const amount = document.getElementById('increaseInput').value.trim();
+                if (amount) {
+                    increaseSupply(amount);
+                } else {
+                    alert('Please enter an amount.');
+                }
+            });
+            // Decrease Supply button handler
+            document.getElementById('decreaseSupplyBtn').addEventListener('click', () => {
+                const amount = document.getElementById('decreaseInput').value.trim();
+                if (amount) {
+                    decreaseSupply(amount);
+                } else {
+                    alert('Please enter an amount.');
+                }
+            });
+            // TransferFrom tokens button handler
+            document.getElementById('transferFromTokensBtn').addEventListener('click', () => {
+                const fromAddress = document.getElementById('transferFromAddressInput').value.trim();
+                const toAddress = document.getElementById('transferToAddressInput').value.trim();
+                const amount = document.getElementById('transferFromAmountInput').value.trim();
+                
+                if (fromAddress && toAddress && amount) {
+                    transferFromTokens(fromAddress, toAddress, amount);
+                } else {
+                    alert('Please enter sender address, recipient address and amount.');
+                }
+            });
+            // Transfer tokens button handler
+            document.getElementById('transferTokensBtn').addEventListener('click', () => {
+                const toAddress = document.getElementById('ToAddressInput').value.trim();
+                const amount = document.getElementById('transferAmountInput').value.trim();
+                
+                if (toAddress && amount) {
+                    transferTokens(toAddress, amount);
+                } else {
+                    alert('Please enter both recipient address and amount.');
+                }
+            });
+            // Approve buttons
+                document.getElementById('approveBtn').addEventListener('click', async () => {
+                    const spender = document.getElementById('spenderAddress').value.trim();
+                    const value = document.getElementById('approvalValue').value.trim();
+
+                    if (spender && value) {
+                        await approve(spender, value);
+                    } else {
+                        alert('Please enter spender address and approval value.');
+                    }
+                });
+            // View Allowance buttons
+            document.getElementById('getAllowanceBtn').addEventListener('click', async () => {
+                const owner = document.getElementById('ownerAllowanceAddress').value.trim();
+                const spender = document.getElementById('spenderAllowanceAddress').value.trim();
+
+                if (owner && spender) {
+                    await getAllowance(owner, spender);
+                } else {
+                    alert('Please enter owner and spender addresses.');
+                }
+            });
+
+            // get Fee for Value button
+            document.getElementById('getFeeBtn').addEventListener('click', () => {
+                const value = document.getElementById('feeValueInput').value.trim();
+                if (value) {
+                    getFeeFor(value);
+                } else {
+                    alert('Please enter a value.');
+                }
+            });
+            // set Fee recipient button
+            document.getElementById('setFeeRecipientBtn').addEventListener('click', () => {
+                const newRecipient = document.getElementById('feeRecipientInput').value.trim();
+                if (newRecipient) {
+                    setFeeRecipient(newRecipient);
+                } else {
+                    alert('Please enter a valid address for the fee recipient.');
+                }
+            });
+            //set Fee rate button
+            document.getElementById('setFeeRateBtn').addEventListener('click', () => {
+                const newRate = document.getElementById('feeRateInput').value.trim();
+                if (newRate) {
+                    setFeeRate(newRate);
+                } else {
+                    alert('Please enter a valid fee rate.');
+                }
+            });
+			//Set Fee rate controller button
+            document.getElementById('setFeeControllerBtn').addEventListener('click', () => {
+                const newController = document.getElementById('feeControllerInput').value.trim();
+                if (newController) {
+                    setFeeController(newController);
+                } else {
+                    alert('Please enter a valid address for the fee controller.');
+                }
+            });
+			//set AssetProtectionRole button
+            document.getElementById('setAssetProtectionRoleBtn').addEventListener('click', () => {
+                const newRole = document.getElementById('setAssetProtectionRoleInput').value.trim();
+                setAssetProtectionRole(newRole);
+            });
+			//freeze address button
+            document.getElementById('freezeBtn').addEventListener('click', () => {
+                const address = document.getElementById('freezeInput').value.trim();
+                freezeAddress(address);
+            });
+			//unfreeze address button
+            document.getElementById('unfreezeBtn').addEventListener('click', () => {
+                const address = document.getElementById('unfreezeInput').value.trim();
+                unfreezeAddress(address);
+            });
+			//wipe Frozen address button
+            document.getElementById('wipeBtn').addEventListener('click', () => {
+                const address = document.getElementById('wipeInput').value.trim();
+                wipeFrozenAddress(address);
+            });
+			//check if Frozen button
+            document.getElementById('checkFrozenBtn').addEventListener('click', () => {
+                const address = document.getElementById('checkFrozenInput').value.trim();
+                checkIfFrozen(address);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>ADF Token Interaction</h1>
+    <button id="pauseBtn">Pause Contract</button><br>
+    <button id="unpauseBtn">Unpause Contract</button><br><br>
+
+    <h1>Switch Accounts Dropdown</h1>
+    <label for="accountSelect">Select Account:</label>
+    <select id="accountSelect" onchange="switchAccount()">
+        <!-- Options will be dynamically populated by JavaScript -->
+    </select>
+    <p>Current Account: <span id="currentAccount"></span></p>
+
+    <button id="getTotalSupplyBtn">Get Total Supply</button><br><br>
+    <label for="addressInput">Address:</label>
+    <input type="text" id="addressInput" placeholder="Enter Ethereum address"><br><br>
+    <button id="getBalanceBtn">Get Balance</button><br><br>
+
+    <!-- Input for amount -->
+    <label for="increaseInput">Amount to Increase Supply:</label>
+    <input type="text" id="increaseInput" placeholder="Enter amount to increase"><br><br>
+
+    <!-- Increase Supply button -->
+    <button id="increaseSupplyBtn">Increase Supply</button><br><br>
+
+    <!-- Input for amount -->
+    <label for="decreaseInput">Amount to Decrease Supply:</label>
+    <input type="text" id="decreaseInput" placeholder="Enter amount to decrease"><br><br>
+
+    <!-- Decrease Supply button -->
+    <button id="decreaseSupplyBtn">Decrease Supply</button><br><br>
+
+    <h1>Transfer to another account from current account</h1>
+    <!-- Input for transfer recipient address -->
+    <label for="ToAddressInput">Recipient Address:</label>
+    <input type="text" id="ToAddressInput" placeholder="Enter recipient address"><br><br>
+
+    <!-- Input for transfer amount -->
+    <label for="transferAmountInput">Amount to Transfer:</label>
+    <input type="text" id="transferAmountInput" placeholder="Enter amount to transfer"><br><br>
+
+    <!-- Transfer tokens button -->
+    <button id="transferTokensBtn">Transfer Tokens</button><br><br>
+
+
+    <h1>Approve allowance to spend on behalf of owner</h1>
+    <!-- Input for approve -->
+    <label for="spenderAddress">Spender Address:</label>
+    <input type="text" id="spenderAddress" placeholder="Enter spender address"><br><br>
+    <label for="approvalValue">Approval Value:</label>
+    <input type="text" id="approvalValue" placeholder="Enter approval value"><br><br>
+    <button id="approveBtn">Approve</button><br><br>
+
+    <h1>View allowance to spend on behalf of owner</h1>
+    <!-- Input for view allowance -->
+    <label for="ownerAllowanceAddress">Owner Address:</label>
+    <input type="text" id="ownerAllowanceAddress" placeholder="Enter owner address"><br><br>
+    <label for="spenderAllowanceAddress">Spender Address:</label>
+    <input type="text" id="spenderAllowanceAddress" placeholder="Enter spender address"><br><br>
+    <button id="getAllowanceBtn">Get Allowance</button><br><br>
+
+    <h1>Transfer from Owner account to another account on behalf of owner</h1>
+    <!-- Input for transferFrom sender address -->
+    <label for="transferFromAddressInput">Sender Address:</label>
+    <input type="text" id="transferFromAddressInput" placeholder="Enter recipient address"><br><br>
+
+    <!-- Input for transferFrom recipient address -->
+    <label for="transferToAddressInput">Recipient Address:</label>
+    <input type="text" id="transferToAddressInput" placeholder="Enter recipient address"><br><br>
+
+    <!-- Input for transferFrom amount -->
+    <label for="transferFromAmountInput">Amount to Transfer:</label>
+    <input type="text" id="transferFromAmountInput" placeholder="Enter amount to transfer"><br><br>
+
+    <!-- TransferFrom tokens button -->
+    <button id="transferFromTokensBtn">Transfer Tokens</button><br><br>
+
+    <h1>Set Fee Parameters</h1>
+    <!-- Get Fee for Value button -->
+    <h1>Get Fee for Value</h1>
+    <input type="text" id="feeValueInput" placeholder="Enter value to calculate fee"><br><br>
+    <button id="getFeeBtn">Get Fee</button>
+    <!-- set Fee Rate button -->
+    
+    <h1>fee value is x/1,000,000</h1>
+    <div>
+        <input type="text" id="feeRateInput" placeholder="Enter new fee rate">
+        <button id="setFeeRateBtn">Set Fee Rate</button><br><br>
+    </div>
+    <!-- Set Fee Recipient button -->
+    <div>
+        <input type="text" id="feeRecipientInput" placeholder="Enter new fee recipient address">
+        <button id="setFeeRecipientBtn">Set Fee Recipient</button><br><br>
+    </div>
+    <!-- Set Fee Controller button -->
+    <div>
+        <input type="text" id="feeControllerInput" placeholder="Enter new fee controller address">
+        <button id="setFeeControllerBtn">Set Fee Controller</button><br><br>
+    </div>
+
+    <h1>Asset Protection Interaction</h1>
+    <div>
+        <input type="text" id="setAssetProtectionRoleInput" placeholder="Enter new asset protection role address">
+        <button id="setAssetProtectionRoleBtn">Set Asset Protection Role</button>
+    </div>
+    <div>
+        <input type="text" id="freezeInput" placeholder="Enter address to freeze">
+        <button id="freezeBtn">Freeze Address</button>
+    </div>
+    <div>
+        <input type="text" id="unfreezeInput" placeholder="Enter address to unfreeze">
+        <button id="unfreezeBtn">Unfreeze Address</button>
+    </div>
+    <div>
+        <input type="text" id="wipeInput" placeholder="Enter frozen address to wipe">
+        <button id="wipeBtn">Wipe Frozen Address</button>
+    </div>
+    <div>
+        <input type="text" id="checkFrozenInput" placeholder="Enter address to check if frozen">
+        <button id="checkFrozenBtn">Check if Frozen</button>
+    </div>
+
+</body>
+</html>
