@@ -1,27 +1,27 @@
-const ADFMock = artifacts.require('ADFWithBalance.sol');
+const UTCMock = artifacts.require('UTCWithBalance.sol');
 const Proxy = artifacts.require('AdminUpgradeabilityProxy.sol');
 
 const assertRevert = require('./helpers/assertRevert');
 
-// Test that ADF operates correctly as an ERC20Basic token.
-contract('ERC20Basic ADF', function ([_, admin, recipient, anotherAccount, owner]) {
+// Test that UTC operates correctly as an ERC20Basic token.
+contract('ERC20Basic UTC', function ([_, admin, recipient, anotherAccount, owner]) {
   const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
   beforeEach(async function () {
-    const adf = await ADFMock.new({from: owner});
-    const proxy = await Proxy.new(adf.address, {from: admin});
-    const proxiedADF = await ADFMock.at(proxy.address);
-    await proxiedADF.initialize({from: owner});
-    await proxiedADF.initializeBalance(owner, 100);
-    this.token = proxiedADF;
+    const utc = await UTCMock.new({from: owner});
+    const proxy = await Proxy.new(utc.address, {from: admin});
+    const proxiedUTC = await UTCMock.at(proxy.address);
+    await proxiedUTC.initialize({from: owner});
+    await proxiedUTC.initializeBalance(owner, 100);
+    this.token = proxiedUTC;
   });
 
   describe('basic data', function () {
     it('has getters for the name, symbol, and decimals', async function () {
       const name = await this.token.name();
-      assert.equal(name, "ADF");
+      assert.equal(name, "UTC");
       const symbol = await this.token.symbol();
-      assert.equal(symbol, "ADF");
+      assert.equal(symbol, "UTC");
       const decimals = await this.token.decimals();
       assert.equal(decimals, 18);
     });

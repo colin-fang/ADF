@@ -1,4 +1,4 @@
-const ADF = artifacts.require("ADFImplementation.sol");
+const UTC = artifacts.require("UTCImplementation.sol");
 const Proxy = artifacts.require("AdminUpgradeabilityProxy.sol");
 
 const assertRevert = require("./helpers/assertRevert");
@@ -7,8 +7,8 @@ const {
   MAX_UINT256
 } = require("@openzeppelin/test-helpers").constants;
 
-// Tests that ADF token supply control mechanisms operate correctly.
-contract("ADF", function([
+// Tests that UTC token supply control mechanisms operate correctly.
+contract("UTC", function([
   _,
   admin,
   newSupplyController,
@@ -16,11 +16,11 @@ contract("ADF", function([
   owner
 ]) {
   beforeEach(async function() {
-    const adf = await ADF.new({ from: owner });
-    const proxy = await Proxy.new(adf.address, { from: admin });
-    const proxiedADF = await ADF.at(proxy.address);
-    await proxiedADF.initialize({ from: owner });
-    this.token = proxiedADF;
+    const utc = await UTC.new({ from: owner });
+    const proxy = await Proxy.new(utc.address, { from: admin });
+    const proxiedUTC = await UTC.at(proxy.address);
+    await proxiedUTC.initialize({ from: owner });
+    this.token = proxiedUTC;
   });
 
   describe("as a supply-controlled token", function() {

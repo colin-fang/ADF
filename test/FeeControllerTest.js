@@ -1,21 +1,21 @@
-const ADFMock = artifacts.require('ADFWithBalance.sol');
+const UTCMock = artifacts.require('UTCWithBalance.sol');
 const Proxy = artifacts.require('AdminUpgradeabilityProxy.sol');
 
 const assertRevert = require('./helpers/assertRevert');
 const ethSigUtil = require('eth-sig-util');
 
-// Tests that ADF fee controller capabilities function correctly.
-contract('Fee Controller ADF', function ([_, admin, feeController, feeRecipient, recipient, otherAddress, owner]) {
+// Tests that UTC fee controller capabilities function correctly.
+contract('Fee Controller UTC', function ([_, admin, feeController, feeRecipient, recipient, otherAddress, owner]) {
     const ownerStartingBalance = 100000000000000;
 
     beforeEach(async function () {
-        const adf = await ADFMock.new({from: owner});
-        const proxy = await Proxy.new(adf.address, {from: admin});
-        const proxiedADF = await ADFMock.at(proxy.address);
-        await proxiedADF.initialize({from: owner});
+        const utc = await UTCMock.new({from: owner});
+        const proxy = await Proxy.new(utc.address, {from: admin});
+        const proxiedUTC = await UTCMock.at(proxy.address);
+        await proxiedUTC.initialize({from: owner});
         // initialize with 1,000,000
-        await proxiedADF.initializeBalance(owner, ownerStartingBalance);
-        this.token = proxiedADF;
+        await proxiedUTC.initializeBalance(owner, ownerStartingBalance);
+        this.token = proxiedUTC;
     });
 
     describe('when the contract is first deployed', function () {
@@ -354,7 +354,7 @@ contract('Fee Controller ADF', function ([_, admin, feeController, feeRecipient,
                     },
                     primaryType: 'BetaDelegatedTransfer',
                     domain: {
-                        name: 'ADF',
+                        name: 'UTC',
                         verifyingContract: this.token.address,
                     },
                 };

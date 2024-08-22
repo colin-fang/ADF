@@ -1,22 +1,22 @@
-# ADF
-ADF-issued physical gold ERC20 token public smart contract repository.
+# UTC
+UTC-issued physical gold ERC20 token public smart contract repository.
 
-adf website goes here
+utc website goes here
 
 ## ABI, Address, and Verification
 
-The contract abi is in `ADF.abi`. It is the abi of the implementation contract.
-Interaction with ADF is done at the address of the proxy at `0xa25f0e9D205Ea819d0A6eF075Ce5D5bE084cb664`. 
+The contract abi is in `UTC.abi`. It is the abi of the implementation contract.
+Interaction with UTC is done at the address of the proxy at `0xa25f0e9D205Ea819d0A6eF075Ce5D5bE084cb664`. 
 
 
 ## Contract Specification
 
-ADF is an ERC20 token that is Centrally Minted and Burned by ADF,
+UTC is an ERC20 token that is Centrally Minted and Burned by UTC,
 representing the physical ownership of Gold Bars.
 
 ### ERC20 Token
 
-The public interface of ADF Gold is the ERC20 interface
+The public interface of UTC Gold is the ERC20 interface
 specified by [EIP-20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md).
 
 - `name()`
@@ -56,13 +56,13 @@ transaction mined onto the blockchain more quickly.
 
 ### Controlling the token supply
 
-The total supply of ADF is backed by gold.
+The total supply of UTC is backed by gold.
 There is a single `supplyController` address that can mint and burn the token
 based on the actual movement of gold in and out of the reserve based on
-requests for the purchase, conversion and redemption of ADF.
+requests for the purchase, conversion and redemption of UTC.
 
 The supply control interface includes methods to get the current address
-of the supply controller, and events to monitor the change in supply of ADF.
+of the supply controller, and events to monitor the change in supply of UTC.
 
 - `supplyController()`
 
@@ -74,18 +74,18 @@ Supply Control Events
 
 ### Pausing the contract
 
-In the event of a critical security threat, ADF has the ability to pause transfers
-and approvals of the ADF token. The ability to pause is controlled by a single `owner` role,
+In the event of a critical security threat, UTC has the ability to pause transfers
+and approvals of the UTC token. The ability to pause is controlled by a single `owner` role,
  following OpenZeppelin's
-[Ownable](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/5daaf60d11ee2075260d0f3adfb22b1c536db983/contracts/ownership/Ownable.sol). 
+[Ownable](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/5daaf60d11ee2075260d0f3utcb22b1c536db983/contracts/ownership/Ownable.sol). 
 The simple model for pausing transfers following OpenZeppelin's
-[Pausable](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/5daaf60d11ee2075260d0f3adfb22b1c536db983/contracts/lifecycle/Pausable.sol).
+[Pausable](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/5daaf60d11ee2075260d0f3utcb22b1c536db983/contracts/lifecycle/Pausable.sol).
 
 ### Fees
 
-ADF charges a set fee rate for all on-chain transfers of ADF in order to offset storage fees of gold bars in our vault.
+UTC charges a set fee rate for all on-chain transfers of UTC in order to offset storage fees of gold bars in our vault.
 The fee controller has the ability to set the fee recipient and the fee rate (measured in 1/100th of a basis point).
-ADF will never change the fee rate without prior notice as we take transparency very seriously.
+UTC will never change the fee rate without prior notice as we take transparency very seriously.
 
 #### Fee Rounding
 The `transfer` function takes the debit amount as input, and computes the fee and credit to the recipient as
@@ -113,7 +113,7 @@ the transfer function will compute a different fee and credit than you intended.
 
 #### Saving On Inverse Fees
 It is sometimes the case that `smallerFee = fee.sub(1)` is also a solution. It is likely only worth the extra compute 
-to save 10^-18 ADF if doing the math off-chain. One checks that 
+to save 10^-18 UTC if doing the math off-chain. One checks that 
 ```
 smallerFee = fee.sub(1)
 debit = credit.add(smallerFee)
@@ -129,21 +129,21 @@ if debitFee == smallerFee { // this is a solution!
 
 As required by our regulators, we have introduced a role for asset protection to freeze or seize the assets of a criminal party when required to do so by law, including by court order or other legal process.
 
-The `assetProtectionRole` can freeze and unfreeze the ADF balance of any address on chain.
+The `assetProtectionRole` can freeze and unfreeze the UTC balance of any address on chain.
 It can also wipe the balance of an address after it is frozen
 to allow the appropriate authorities to seize the backing assets. 
 
-Freezing is something that ADF will not do on its own accord,
+Freezing is something that UTC will not do on its own accord,
 and as such we expect to happen extremely rarely. The list of frozen addresses is available
 in `isFrozen(address who)`.
 
 ### BetaDelegateTransfer
 
 In order to allow for gas-less transactions we have implemented a variation of [EIP-865](https://github.com/ethereum/EIPs/issues/865).
-The public function betaDelegatedTransfer and betaDelegatedTransferBatch allow an approved party to transfer ADF
+The public function betaDelegatedTransfer and betaDelegatedTransferBatch allow an approved party to transfer UTC
 on the end user's behalf given a signed message from said user. Because EIP-865 is not finalized,
 all methods related to delegated transfers are prefixed by Beta. Only approved parties are allowed to transfer
-ADF on a user's behalf because of potential attacks associated with signing messages.
+UTC on a user's behalf because of potential attacks associated with signing messages.
 To mitigate some attacks, [EIP-712](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-712.md)
 is implemented which provides a structured message to be displayed for verification when signing.
 ```
@@ -162,7 +162,7 @@ implementation contract.
 The delegation uses `delegatecall`, which runs the code of the implementation contract
 _in the context of the proxy storage_. This way the implementation pointer can
 be changed to a different implementation contract while still keeping the same
-data and ADF contract address, which are really for the proxy contract.
+data and UTC contract address, which are really for the proxy contract.
 
 The proxy used here is AdminUpgradeabilityProxy from ZeppelinOS.
 

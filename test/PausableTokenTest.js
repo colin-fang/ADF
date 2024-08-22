@@ -1,17 +1,17 @@
-const ADFMock = artifacts.require('ADFWithBalance.sol');
+const UTCMock = artifacts.require('UTCWithBalance.sol');
 const Proxy = artifacts.require('AdminUpgradeabilityProxy.sol');
 
 const assertRevert = require('./helpers/assertRevert');
 
-// Test that ADF operates correctly as a Pausable token.
-contract('Pausable ADF', function ([_, admin, anotherAccount, owner]) {
+// Test that UTC operates correctly as a Pausable token.
+contract('Pausable UTC', function ([_, admin, anotherAccount, owner]) {
   beforeEach(async function () {
-    const adf = await ADFMock.new({from: owner});
-    const proxy = await Proxy.new(adf.address, {from: admin});
-    const proxiedADF = await ADFMock.at(proxy.address);
-    await proxiedADF.initialize({from: owner});
-    await proxiedADF.initializeBalance(owner, 100);
-    this.token = proxiedADF;
+    const utc = await UTCMock.new({from: owner});
+    const proxy = await Proxy.new(utc.address, {from: admin});
+    const proxiedUTC = await UTCMock.at(proxy.address);
+    await proxiedUTC.initialize({from: owner});
+    await proxiedUTC.initializeBalance(owner, 100);
+    this.token = proxiedUTC;
   });
 
   const amount = 10;
