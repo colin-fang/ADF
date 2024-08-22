@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
 
-import "../../contracts/ADFImplementation.sol";
+import "../../contracts/UTCImplementation.sol";
 
 
-contract ADFWithBalance is ADFImplementation {
+contract UTCWithBalance is UTCImplementation {
 
     function initializeBalance(address initialAccount, uint initialBalance) public {
         balances[initialAccount] = initialBalance;

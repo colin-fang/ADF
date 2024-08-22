@@ -1,19 +1,19 @@
-const ADF = artifacts.require('ADFImplementation.sol');
+const UTC = artifacts.require('UTCImplementation.sol');
 const Proxy = artifacts.require('AdminUpgradeabilityProxy.sol');
 
 const assertRevert = require('./helpers/assertRevert');
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-// Tests that ADF Asset Protection capabilities function correctly.
-contract('ADF', function ([_, admin, assetProtectionRole, otherAddress, freezableAddress, owner]) {
+// Tests that UTC Asset Protection capabilities function correctly.
+contract('UTC', function ([_, admin, assetProtectionRole, otherAddress, freezableAddress, owner]) {
 
   beforeEach(async function () {
-    const adf = await ADF.new({from: owner});
-    const proxy = await Proxy.new(adf.address, {from: admin});
-    const proxiedADF = await ADF.at(proxy.address);
-    await proxiedADF.initialize({from: owner});
-    this.token = proxiedADF;
+    const utc = await UTC.new({from: owner});
+    const proxy = await Proxy.new(utc.address, {from: admin});
+    const proxiedUTC = await UTC.at(proxy.address);
+    await proxiedUTC.initialize({from: owner});
+    this.token = proxiedUTC;
   });
 
   describe('when the asset protection role is unset', function () {

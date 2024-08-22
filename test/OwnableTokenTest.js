@@ -1,19 +1,19 @@
-const ADF = artifacts.require('ADFImplementation.sol');
+const UTC = artifacts.require('UTCImplementation.sol');
 const Proxy = artifacts.require('AdminUpgradeabilityProxy.sol');
 
 const assertRevert = require('./helpers/assertRevert');
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-// Test that ADF operates correctly as an Ownable token.
-contract('Ownable ADF', function ([_, admin, anotherAccount, anotherAccount2, owner]) {
+// Test that UTC operates correctly as an Ownable token.
+contract('Ownable UTC', function ([_, admin, anotherAccount, anotherAccount2, owner]) {
   beforeEach(async function () {
-    const adf = await ADF.new({from: owner});
-    const proxy = await Proxy.new(adf.address, {from: admin});
-    const proxiedADF = await ADF.at(proxy.address);
-    await proxiedADF.initialize({from: owner});
-    this.token = proxiedADF;
-    this.adf = adf;
+    const utc = await UTC.new({from: owner});
+    const proxy = await Proxy.new(utc.address, {from: admin});
+    const proxiedUTC = await UTC.at(proxy.address);
+    await proxiedUTC.initialize({from: owner});
+    this.token = proxiedUTC;
+    this.utc = utc;
   });
 
   describe('as an ownable', function () {
@@ -133,11 +133,11 @@ contract('Ownable ADF', function ([_, admin, anotherAccount, anotherAccount2, ow
     });
 
     it('constructor initializes the implementation contract and pauses it to avoid misleading state there', async function () {
-      const isPaused = await this.adf.paused();
+      const isPaused = await this.utc.paused();
       assert.strictEqual(isPaused, true);
-      const currentOwner = this.adf.owner();
+      const currentOwner = this.utc.owner();
       assert.notStrictEqual(currentOwner, ZERO_ADDRESS);
-      await assertRevert(this.adf.initialize());
+      await assertRevert(this.utc.initialize());
     });
   });
 });

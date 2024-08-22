@@ -1,16 +1,16 @@
 {
-  "name": "adf",
+  "name": "utc",
   "version": "0.0.1",
-  "description": "ADF-issued Gold-collateralized ERC20 asset",
+  "description": "UTC-issued Gold-collateralized ERC20 asset",
   "main": "truffle.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "abi": "mkdir -p abi-out && solcjs --abi ./contracts/zeppelin/SafeMath.sol ./contracts/ADFImplementation.sol -o ./abi-out && cp ./abi-out/__contracts_ADFImplementation_sol_ADFImplementation.abi ./ADF.abi",
+    "abi": "mkdir -p abi-out && solcjs --abi ./contracts/zeppelin/SafeMath.sol ./contracts/UTCImplementation.sol -o ./abi-out && cp ./abi-out/__contracts_UTCImplementation_sol_UTCImplementation.abi ./UTC.abi",
     "compile": "truffle compile",
     "coverage": "solidity-coverage",
-    "flatten-impl": "truffle-flattener ./contracts/ADFImplementation.sol > ./flattened/ADFImplementation.sol",
+    "flatten-impl": "truffle-flattener ./contracts/UTCImplementation.sol > ./flattened/UTCImplementation.sol",
     "flatten-proxy": "truffle-flattener ./contracts/zeppelin/AdminUpgradeabilityProxy.sol > ./flattened/AdminUpgradeabilityProxy.sol",
     "ganache": "ganache-cli",
     "migrate": "truffle migrate",
@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/colin-fang/ADF.git"
+    "url": "git+https://github.com/colin-fang/UTC.git"
   },
-  "author": "ADF",
+  "author": "UTC",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/colin-fang/ADF/issues"
+    "url": "https://github.com/colin-fang/UTC/issues"
   },
-  "homepage": "https://github.com/colin-fang/ADF#readme",
+  "homepage": "https://github.com/colin-fang/UTC#readme",
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.10",
     "@openzeppelin/upgrades": "^2.8.0",
@@ -45,5 +45,8 @@
     "ajv": "^6.12.3",
     "elliptic": "^6.0.0",
     "diff": "^3.5.0"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^1.1.1"
   }
 }

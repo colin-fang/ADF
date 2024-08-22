@@ -1,7 +1,7 @@
 const ethSigUtil = require("eth-sig-util");
 const { ZERO_ADDRESS } = require("@openzeppelin/test-helpers").constants;
 
-const ADFMock = artifacts.require("ADFWithBalance.sol");
+const UTCMock = artifacts.require("UTCWithBalance.sol");
 const Proxy = artifacts.require("AdminUpgradeabilityProxy.sol");
 
 const assertRevert = require("./helpers/assertRevert");
@@ -18,8 +18,8 @@ const wrongPrivateKey = new Buffer(
   "hex"
 );
 
-// Test that ADF operates correctly as a token with BetaDelegatedTransfer.
-contract("BetaDelegatedTransfer ADF", function([
+// Test that UTC operates correctly as a token with BetaDelegatedTransfer.
+contract("BetaDelegatedTransfer UTC", function([
   _,
   admin,
   owner,
@@ -32,13 +32,13 @@ contract("BetaDelegatedTransfer ADF", function([
   const serviceFeeAmount = 1;
 
   beforeEach(async function() {
-    const adf = await ADFMock.new({ from: owner });
-    const proxy = await Proxy.new(adf.address, { from: admin });
-    const proxiedADF = await ADFMock.at(proxy.address);
-    await proxiedADF.initialize({ from: owner });
-    await proxiedADF.initializeDomainSeparator({ from: owner });
-    await proxiedADF.initializeBalance(owner, 100);
-    this.token = proxiedADF;
+    const utc = await UTCMock.new({ from: owner });
+    const proxy = await Proxy.new(utc.address, { from: admin });
+    const proxiedUTC = await UTCMock.at(proxy.address);
+    await proxiedUTC.initialize({ from: owner });
+    await proxiedUTC.initializeDomainSeparator({ from: owner });
+    await proxiedUTC.initializeBalance(owner, 100);
+    this.token = proxiedUTC;
   });
 
   describe("as a token with delegated transfer", function() {
@@ -59,7 +59,7 @@ contract("BetaDelegatedTransfer ADF", function([
         },
         primaryType: "BetaDelegatedTransfer",
         domain: {
-          name: "ADF",
+          name: "UTC",
           verifyingContract: this.token.address
         }
       };

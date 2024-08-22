@@ -1,21 +1,21 @@
-const ADFMock = artifacts.require('ADFWithBalance.sol');
+const UTCMock = artifacts.require('UTCWithBalance.sol');
 const Proxy = artifacts.require('AdminUpgradeabilityProxy.sol');
 
 const assertRevert = require('./helpers/assertRevert');
 
-// Test that the ADF contract can reclaim ADF it has received.
+// Test that the UTC contract can reclaim UTC it has received.
 // Note that the contract is not payable in Eth.
 contract('CanReclaimFunds', function ([_, admin, owner, assetProtectionRole, anyone]) {
   const amount = 100;
 
   beforeEach(async function () {
     // Create contract and token
-    const adf = await ADFMock.new({from: owner});
-    const proxy = await Proxy.new(adf.address, {from: admin});
-    const proxiedADF = await ADFMock.at(proxy.address);
-    await proxiedADF.initialize({from: owner});
-    await proxiedADF.initializeBalance(owner, amount);
-    this.token = proxiedADF;
+    const utc = await UTCMock.new({from: owner});
+    const proxy = await Proxy.new(utc.address, {from: admin});
+    const proxiedUTC = await UTCMock.at(proxy.address);
+    await proxiedUTC.initialize({from: owner});
+    await proxiedUTC.initializeBalance(owner, amount);
+    this.token = proxiedUTC;
 
     // Send token to the contract
     await this.token.transfer(this.token.address, amount, {from: owner});
@@ -36,7 +36,7 @@ contract('CanReclaimFunds', function ([_, admin, owner, assetProtectionRole, any
   });
 
   it('should allow owner to reclaim tokens', async function () {
-    await this.token.reclaimADF({from: owner});
+    await this.token.reclaimUTC({from: owner});
 
     const balance = await this.token.balanceOf(owner);
     assert.equal(amount, balance);
@@ -46,7 +46,7 @@ contract('CanReclaimFunds', function ([_, admin, owner, assetProtectionRole, any
 
   it('should allow only owner to reclaim tokens', async function () {
     await assertRevert(
-      this.token.reclaimADF({from: anyone})
+      this.token.reclaimUTC({from: anyone})
     );
   });
 });
