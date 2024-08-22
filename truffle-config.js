@@ -1,8 +1,8 @@
 var HDWalletProvider = require("@truffle/hdwallet-provider");
 require('dotenv').config();
 const { MNEMONIC, ALCHEMY_API_KEY } = process.env;
-console.log("MNEMONIC:", process.env.MNEMONIC);
-console.log("ALCHEMY_API_KEY:", process.env.ALCHEMY_API_KEY);
+//console.log("MNEMONIC:", process.env.MNEMONIC);
+//console.log("ALCHEMY_API_KEY:", process.env.ALCHEMY_API_KEY);
 const walletChildNum = 0;
 const networkAddress = "https://mainnet.infura.io/v3/<your-api-key>";
 const goerliNetworkAddress = "https://goerli.infura.io/v3/<your-api-key>";
