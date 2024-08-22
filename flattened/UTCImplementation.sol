@@ -59,7 +59,7 @@ library SafeMath {
     }
 }
 
-// File: contracts/ADFImplementation.sol
+// File: contracts/UTCImplementation.sol
 
 pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
@@ -67,9 +67,9 @@ pragma experimental "v0.5.0";
 
 
 /**
- * @title ADFImplementation
+ * @title UTCImplementation
  * @dev this contract is a Pausable ERC20 token with Burn and Mint
- * controlled by a central SupplyController. By implementing ADFImplementation
+ * controlled by a central SupplyController. By implementing UTCImplementation
  * this contract also includes external methods for setting
  * a new implementation contract for the Proxy.
  * NOTE: The storage defined here will actually be held in the Proxy
@@ -78,7 +78,7 @@ pragma experimental "v0.5.0";
  * Any call to transfer against this contract should fail
  * with insufficient funds since no tokens will be issued there.
  */
-contract ADFImplementation {
+contract UTCImplementation {
 
     /**
      * MATH
@@ -96,8 +96,8 @@ contract ADFImplementation {
     // ERC20 BASIC DATA
     mapping(address => uint256) internal balances;
     uint256 internal totalSupply_;
-    string public constant name = "ADF"; // solium-disable-line
-    string public constant symbol = "ADF"; // solium-disable-line uppercase
+    string public constant name = "UTC"; // solium-disable-line
+    string public constant symbol = "UTC"; // solium-disable-line uppercase
     uint8 public constant decimals = 18; // solium-disable-line uppercase
 
     // ERC20 DATA
@@ -423,11 +423,11 @@ contract ADFImplementation {
     }
 
     /**
-     * @dev Reclaim all ADF at the contract address.
-     * This sends the ADF tokens that this contract add holding to the owner.
+     * @dev Reclaim all UTC at the contract address.
+     * This sends the UTC tokens that this contract add holding to the owner.
      * Note: this is not affected by freeze constraints.
      */
-    function reclaimADF() external onlyOwner {
+    function reclaimUTC() external onlyOwner {
         uint256 _balance = balances[this];
         balances[this] = 0;
         balances[owner] = balances[owner].add(_balance);
