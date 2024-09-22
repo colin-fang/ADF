@@ -1,8 +1,13 @@
 pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
-
+//dummy change
 
 import "./zeppelin/SafeMath.sol";
+
+// Interface for the GoldPriceOracle contract
+interface GoldPriceOracle {
+    function getLatestRoundData() external view returns (uint80, int, uint);
+}
 
 
 /**
@@ -24,6 +29,33 @@ contract UTCImplementation {
      */
 
     using SafeMath for uint256;
+
+    /**
+     * CHAINLINK
+     */
+
+    GoldPriceOracle internal goldPriceOracle;
+
+
+    //  function to fetch and use the latest reserve data from GoldPriceOracle
+    function getLatestBTCPrice() public view returns (int256) {
+        (, int256 price,) = goldPriceOracle.getLatestRoundData();
+        return price;
+    }
+    //function to check goldPriceOracle address
+    function getGoldPriceOracleAddress() public view returns (address) {
+        return address(goldPriceOracle);
+    }
+
+    //function to change the goldPriceOracle address
+    function updateGoldPriceOracle(address _newOracleAddress) public onlyOwner {
+        require(_newOracleAddress != address(0), "Invalid oracle address");
+        goldPriceOracle = GoldPriceOracle(_newOracleAddress);
+        emit GoldPriceOracleUpdated(_newOracleAddress);
+    }
+
+    event GoldPriceOracleUpdated(address indexed newOracleAddress);
+
 
     /**
      * DATA
@@ -171,8 +203,11 @@ contract UTCImplementation {
      * this serves as the constructor for the proxy but compiles to the
      * memory model of the Implementation contract.
      */
-    function initialize() public {
+    function initialize(address _goldPriceOracleAddress) public {
         require(!initialized, "already initialized");
+        require(_goldPriceOracleAddress != address(0), "Invalid oracle address");
+        goldPriceOracle = GoldPriceOracle(_goldPriceOracleAddress);
+        emit GoldPriceOracleSet(_goldPriceOracleAddress);  // Add an event
         owner = msg.sender;
         proposedOwner = address(0);
         assetProtectionRole = address(0);
@@ -184,6 +219,8 @@ contract UTCImplementation {
         initializeDomainSeparator();
         initialized = true;
     }
+    
+    event GoldPriceOracleSet(address indexed oracleAddress);
 
     /**
      * The constructor is used here to ensure that the implementation
@@ -191,8 +228,8 @@ contract UTCImplementation {
      * contract might lead to misleading state
      * for users who accidentally interact with it.
      */
-    constructor() public {
-        initialize();
+    constructor(address _goldPriceOracleAddress) public {
+        initialize(_goldPriceOracleAddress);
         pause();
     }
 

@@ -4,8 +4,6 @@ const { MNEMONIC, ALCHEMY_API_KEY } = process.env;
 //console.log("MNEMONIC:", process.env.MNEMONIC);
 //console.log("ALCHEMY_API_KEY:", process.env.ALCHEMY_API_KEY);
 const walletChildNum = 0;
-const networkAddress = "https://mainnet.infura.io/v3/<your-api-key>";
-const goerliNetworkAddress = "https://goerli.infura.io/v3/<your-api-key>";
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -23,11 +21,12 @@ networks: {
         mnemonic: {
           phrase: MNEMONIC
         },
-        providerOrUrl: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`
+        providerOrUrl: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+        addressIndex: 1 // Use different index for different addresses
         
       }),
       network_id: 11155111, // Sepolia's network id
-      gas: 8000000,     // Gas limit
+      gas: 6000000,     // Gas limit
       gasPrice: 10000000000, // Gas price in wei (10 gwei)
       timeoutBlocks: 200,    // Increase the timeout for deploying
       networkCheckTimeout: 1000000, // Increase the network check timeout
@@ -41,19 +40,19 @@ networks: {
       gas: 10000000000000,
       gasPrice: 0x01
     },
-    goerli: {
-      network_id: 5,
-      provider: function() {
-        return new HDWalletProvider(mnemonic, goerliNetworkAddress, walletChildNum)
-      },
-      gas: 4700000,
-      gasPrice: 0x01
-    },
     mainnet: {
-      network_id: 1,
-      provider: function () {
-        return new HDWalletProvider(mnemonic, networkAddress, walletChildNum)
-      },
+      provider: () => new HDWalletProvider({
+        mnemonic: {
+          phrase: MNEMONIC
+        },
+        providerOrUrl: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`
+      }),
+      network_id: 1,       // Mainnet's id
+      gas: 8000000,     // Gas limit
+      gasPrice: 10000000000, // Gas price in wei (10 gwei)
+      timeoutBlocks: 200,    // Increase the timeout for deploying
+      networkCheckTimeout: 1000000, // Increase the network check timeout
+      skipDryRun: true      // Skip the dry run before migrations (default: false for public nets)
     },
   },
   compilers: {

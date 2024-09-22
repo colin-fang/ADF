@@ -16,7 +16,7 @@
             }catch{
                 console.log("local ganache connection failed");
             }
-            /*if (window.ethereum) {
+            if (window.ethereum) {
                 window.web3 = new Web3(ethereum);
                 try {
                     // Request account access if needed
@@ -40,10 +40,1163 @@
 
                 }
                 console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-            }*/
+            }
 
             // Contract ABI definition
-            const contractABI = [{"constant":false,"inputs":[],"name":"disregardProposeOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"reclaimUTC","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"uint256"}],"name":"getFeeFor","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"r","type":"bytes32[]"},{"name":"s","type":"bytes32[]"},{"name":"v","type":"uint8[]"},{"name":"to","type":"address[]"},{"name":"value","type":"uint256[]"},{"name":"serviceFee","type":"uint256[]"},{"name":"seq","type":"uint256[]"},{"name":"deadline","type":"uint256[]"}],"name":"betaDelegatedTransferBatch","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"sig","type":"bytes"},{"name":"to","type":"address"},{"name":"value","type":"uint256"},{"name":"serviceFee","type":"uint256"},{"name":"seq","type":"uint256"},{"name":"deadline","type":"uint256"}],"name":"betaDelegatedTransfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"initializeDomainSeparator","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"assetProtectionRole","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newFeeController","type":"address"}],"name":"setFeeController","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_newFeeRate","type":"uint256"}],"name":"setFeeRate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"unfreeze","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"feeRecipient","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claimOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_newSupplyController","type":"address"}],"name":"setSupplyController","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"feeParts","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"feeController","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"initialize","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"target","type":"address"}],"name":"nextSeqOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"freeze","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"feeRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newWhitelister","type":"address"}],"name":"setBetaDelegateWhitelister","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"decreaseSupply","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"isWhitelistedBetaDelegate","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_newAssetProtectionRole","type":"address"}],"name":"setAssetProtectionRole","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"whitelistBetaDelegate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_proposedOwner","type":"address"}],"name":"proposeOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"increaseSupply","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"betaDelegateWhitelister","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"feeDecimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"proposedOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"unwhitelistBetaDelegate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"wipeFrozenAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"EIP712_DOMAIN_HASH","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_addr","type":"address"}],"name":"isFrozen","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newFeeRecipient","type":"address"}],"name":"setFeeRecipient","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"supplyController","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"currentOwner","type":"address"},{"indexed":true,"name":"proposedOwner","type":"address"}],"name":"OwnershipTransferProposed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldProposedOwner","type":"address"}],"name":"OwnershipTransferDisregarded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[],"name":"Pause","type":"event"},{"anonymous":false,"inputs":[],"name":"Unpause","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"addr","type":"address"}],"name":"AddressFrozen","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"addr","type":"address"}],"name":"AddressUnfrozen","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"addr","type":"address"}],"name":"FrozenAddressWiped","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldAssetProtectionRole","type":"address"},{"indexed":true,"name":"newAssetProtectionRole","type":"address"}],"name":"AssetProtectionRoleSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"SupplyIncreased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"SupplyDecreased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldSupplyController","type":"address"},{"indexed":true,"name":"newSupplyController","type":"address"}],"name":"SupplyControllerSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"seq","type":"uint256"},{"indexed":false,"name":"serviceFee","type":"uint256"}],"name":"BetaDelegatedTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldWhitelister","type":"address"},{"indexed":true,"name":"newWhitelister","type":"address"}],"name":"BetaDelegateWhitelisterSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"newDelegate","type":"address"}],"name":"BetaDelegateWhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldDelegate","type":"address"}],"name":"BetaDelegateUnwhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"FeeCollected","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldFeeRate","type":"uint256"},{"indexed":true,"name":"newFeeRate","type":"uint256"}],"name":"FeeRateSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldFeeController","type":"address"},{"indexed":true,"name":"newFeeController","type":"address"}],"name":"FeeControllerSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"oldFeeRecipient","type":"address"},{"indexed":true,"name":"newFeeRecipient","type":"address"}],"name":"FeeRecipientSet","type":"event"}];
+            const contractABI = [
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "name",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "string"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "assetProtectionRole",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "decimals",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint8"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "feeRecipient",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "feeParts",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "paused",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "feeController",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "owner",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "symbol",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "string"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "feeRate",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "betaDelegateWhitelister",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "feeDecimals",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint8"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "proposedOwner",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "EIP712_DOMAIN_HASH",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bytes32"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "supplyController",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "inputs": [
+                    {
+                      "name": "_goldPriceOracleAddress",
+                      "type": "address"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "constructor"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "from",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "Transfer",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "owner",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "spender",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "Approval",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "currentOwner",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "proposedOwner",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "OwnershipTransferProposed",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldProposedOwner",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "OwnershipTransferDisregarded",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldOwner",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "newOwner",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "OwnershipTransferred",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [],
+                  "name": "Pause",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [],
+                  "name": "Unpause",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "AddressFrozen",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "AddressUnfrozen",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "FrozenAddressWiped",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldAssetProtectionRole",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "newAssetProtectionRole",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "AssetProtectionRoleSet",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "SupplyIncreased",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "from",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "SupplyDecreased",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldSupplyController",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "newSupplyController",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "SupplyControllerSet",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "from",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "value",
+                      "type": "uint256"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "seq",
+                      "type": "uint256"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "serviceFee",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "BetaDelegatedTransfer",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldWhitelister",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "newWhitelister",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "BetaDelegateWhitelisterSet",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "newDelegate",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "BetaDelegateWhitelisted",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldDelegate",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "BetaDelegateUnwhitelisted",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "from",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": false,
+                      "name": "value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "FeeCollected",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldFeeRate",
+                      "type": "uint256"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "newFeeRate",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "FeeRateSet",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldFeeController",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "newFeeController",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "FeeControllerSet",
+                  "type": "event"
+                },
+                {
+                  "anonymous": false,
+                  "inputs": [
+                    {
+                      "indexed": true,
+                      "name": "oldFeeRecipient",
+                      "type": "address"
+                    },
+                    {
+                      "indexed": true,
+                      "name": "newFeeRecipient",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "FeeRecipientSet",
+                  "type": "event"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "getLatestBTCPrice",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "int256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_goldPriceOracleAddress",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "initialize",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [],
+                  "name": "initializeDomainSeparator",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [],
+                  "name": "totalSupply",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_to",
+                      "type": "address"
+                    },
+                    {
+                      "name": "_value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "transfer",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "balanceOf",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_from",
+                      "type": "address"
+                    },
+                    {
+                      "name": "_to",
+                      "type": "address"
+                    },
+                    {
+                      "name": "_value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "transferFrom",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_spender",
+                      "type": "address"
+                    },
+                    {
+                      "name": "_value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "approve",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [
+                    {
+                      "name": "_owner",
+                      "type": "address"
+                    },
+                    {
+                      "name": "_spender",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "allowance",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_proposedOwner",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "proposeOwner",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [],
+                  "name": "disregardProposeOwner",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [],
+                  "name": "claimOwnership",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [],
+                  "name": "reclaimUTC",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [],
+                  "name": "pause",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [],
+                  "name": "unpause",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_newAssetProtectionRole",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "setAssetProtectionRole",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "freeze",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "unfreeze",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "wipeFrozenAddress",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "isFrozen",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_newSupplyController",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "setSupplyController",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "increaseSupply",
+                  "outputs": [
+                    {
+                      "name": "success",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "decreaseSupply",
+                  "outputs": [
+                    {
+                      "name": "success",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [
+                    {
+                      "name": "target",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "nextSeqOf",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "sig",
+                      "type": "bytes"
+                    },
+                    {
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "name": "value",
+                      "type": "uint256"
+                    },
+                    {
+                      "name": "serviceFee",
+                      "type": "uint256"
+                    },
+                    {
+                      "name": "seq",
+                      "type": "uint256"
+                    },
+                    {
+                      "name": "deadline",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "betaDelegatedTransfer",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "r",
+                      "type": "bytes32[]"
+                    },
+                    {
+                      "name": "s",
+                      "type": "bytes32[]"
+                    },
+                    {
+                      "name": "v",
+                      "type": "uint8[]"
+                    },
+                    {
+                      "name": "to",
+                      "type": "address[]"
+                    },
+                    {
+                      "name": "value",
+                      "type": "uint256[]"
+                    },
+                    {
+                      "name": "serviceFee",
+                      "type": "uint256[]"
+                    },
+                    {
+                      "name": "seq",
+                      "type": "uint256[]"
+                    },
+                    {
+                      "name": "deadline",
+                      "type": "uint256[]"
+                    }
+                  ],
+                  "name": "betaDelegatedTransferBatch",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "isWhitelistedBetaDelegate",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "bool"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_newWhitelister",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "setBetaDelegateWhitelister",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "whitelistBetaDelegate",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_addr",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "unwhitelistBetaDelegate",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_newFeeController",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "setFeeController",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_newFeeRecipient",
+                      "type": "address"
+                    }
+                  ],
+                  "name": "setFeeRecipient",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": false,
+                  "inputs": [
+                    {
+                      "name": "_newFeeRate",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "setFeeRate",
+                  "outputs": [],
+                  "payable": false,
+                  "stateMutability": "nonpayable",
+                  "type": "function"
+                },
+                {
+                  "constant": true,
+                  "inputs": [
+                    {
+                      "name": "_value",
+                      "type": "uint256"
+                    }
+                  ],
+                  "name": "getFeeFor",
+                  "outputs": [
+                    {
+                      "name": "",
+                      "type": "uint256"
+                    }
+                  ],
+                  "payable": false,
+                  "stateMutability": "view",
+                  "type": "function"
+                }
+              ];
 
             // Contract address 
 			//Address of local tightfisted rythm contract
@@ -52,12 +1205,12 @@
 			//Address of local tan potato ganache contract
            //const contractAddress = '0x65A160271E0a18061102eDe60CcA69B1fc05A80d'; 
 			//Address of local tan potato ganache contract proxy
-			const contractAddress = '0x9368AB8253AFAbFB0214845867D4E5F0960BC59C'; 
+			//const contractAddress = '0x9368AB8253AFAbFB0214845867D4E5F0960BC59C'; 
 
 			//Address of Sepolia testnet contract implementation
-			//const contractAddress = '0x4e7ebd75E72C862Fc3DA3E2b9100aA5C620c309d';
+			//const contractAddress = '0x572940AF6fEa848f15Ee46A0288DF07a2Bf47e97';
 			//Address of Sepolia testnet contract proxy
-			//const contractAddress = '0xa25f0e9D205Ea819d0A6eF075Ce5D5bE084cb664';
+			const contractAddress = '0x8eC44B4ee46b67e43746730C298d870210D28e26';
 
 
 
@@ -106,6 +1259,19 @@
         // Call function to populate dropdown and initialize web3
         populateAccountsDropdown();
 
+        // Function to fetch and display the latest BTC price from the contract
+        async function getLatestBTCPrice() {
+            try {
+                // Call the `getLatestBTCPrice` function in the contract
+                const price = await contract.methods.getLatestBTCPrice().call();
+        
+                // Display the result on the webpage
+                document.getElementById('btcPriceDisplay').textContent = `Latest BTC Reserve Price: ${price}`;
+            } catch (error) {
+                console.error("Failed to fetch the latest BTC price:", error);
+                alert('Failed to fetch the latest BTC price.');
+            }
+        }
 
         // Example function to get total supply
         async function getTotalSupply() {
@@ -199,9 +1365,6 @@
                 alert('Failed to unpause the contract.');
             }
         }
-        // Pause and unpause buttons event listeners
-        document.getElementById('pauseBtn').addEventListener('click', pauseContract);
-        document.getElementById('unpauseBtn').addEventListener('click', unpauseContract);
 
         // Function to interact with approve
             async function approve(spender, value) {
@@ -308,6 +1471,14 @@
                 const isFrozen = await contract.methods.isFrozen(address).call();
                 alert(`Is the address ${address} frozen? ${isFrozen}`);
             }
+
+            
+            // Pause and unpause buttons event listeners
+            document.getElementById('pauseBtn').addEventListener('click', pauseContract);
+            document.getElementById('unpauseBtn').addEventListener('click', unpauseContract);
+
+            // Event listener for the button to fetch the latest BTC price
+            document.getElementById('getLatestBTCPriceBtn').addEventListener('click', getLatestBTCPrice);
 
             // get Total supply and get balance buttons
             document.getElementById('getTotalSupplyBtn').addEventListener('click', getTotalSupply);
@@ -459,6 +1630,10 @@
         <!-- Options will be dynamically populated by JavaScript -->
     </select>
     <p>Current Account: <span id="currentAccount"></span></p>
+
+    <h1>Fetch Latest BTC Reserve Price</h1>
+    <button id="getLatestBTCPriceBtn">Get Latest BTC Price</button>
+    <p id="btcPriceDisplay"></p>
 
     <button id="getTotalSupplyBtn">Get Total Supply</button><br><br>
     <label for="addressInput">Address:</label>
